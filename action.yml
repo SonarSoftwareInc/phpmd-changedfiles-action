@@ -1,0 +1,39 @@
+name: 'Run phpmd'
+description: 'Run phpmd on pull requests to improve code review experience'
+author: 'cjw6k'
+inputs:
+  github_token:
+    description: 'GITHUB_TOKEN'
+    required: true
+  php_args:
+    description: 'Arguments for the php runtime.'
+    default: ''
+    required: false
+  phpmd_source_arg:
+    description: 'Source argument for phpmd.'
+    default: '.'
+    required: false
+  phpmd_source_diff_from_branch:
+    description: 'The base branch to diff with target.'
+    required: false
+  phpmd_ruleset_arg:
+    description: 'Rulesets to apply with phpmd -or- a ruleset XML file.'
+    default: 'cleancode,codesize,controversial,design,naming,unusedcode'
+    required: false
+  phpmd_optional_args:
+    description: 'Optional arguments for phpmd.'
+    default: ''
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.github_token }}
+    - ${{ inputs.php_args }}
+    - ${{ inputs.phpmd_source_arg }}
+    - ${{ inputs.phpmd_source_diff_from_branch }}
+    - ${{ inputs.phpmd_ruleset_arg }}
+    - ${{ inputs.phpmd_optional_args }}
+branding:
+  icon: 'edit'
+  color: 'gray-dark'
