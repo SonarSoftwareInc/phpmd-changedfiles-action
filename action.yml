@@ -5,10 +5,6 @@ inputs:
   github_token:
     description: 'GITHUB_TOKEN'
     required: true
-  reporter:
-    description: 'Reporter of command [github-pr-check,github-pr-review]'
-    default: 'github-pr-check'
-    required: true
   php_args:
     description: 'Arguments for the php runtime.'
     default: ''
@@ -17,8 +13,8 @@ inputs:
     description: 'Source argument for phpmd.'
     default: '.'
     required: false
-  phpmd_source_from_diff:
-    description: 'Scan only changed files in the branch, if this is set to any value.'
+  phpmd_source_diff_from_branch:
+    description: 'The base branch to diff with target.'
     required: false
   phpmd_ruleset_arg:
     description: 'Rulesets to apply with phpmd -or- a ruleset XML file.'
@@ -33,10 +29,9 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.github_token }}
-    - ${{ inputs.reporter }}
     - ${{ inputs.php_args }}
     - ${{ inputs.phpmd_source_arg }}
-    - ${{ inputs.phpmd_source_from_diff }}
+    - ${{ inputs.phpmd_source_diff_from_branch }}
     - ${{ inputs.phpmd_ruleset_arg }}
     - ${{ inputs.phpmd_optional_args }}
 branding:
