@@ -5,7 +5,8 @@ cd "${GITHUB_WORKSPACE}"
 if [ ${#INPUT_PHPMD_SOURCE_DIFF_FROM_BRANCH} -eq 0 ]; then
   filesToCheck=${INPUT_PHPMD_SOURCE_ARG}
 else
-  filesToCheck=$(git diff --name-only `git merge-base ${INPUT_PHPMD_SOURCE_DIFF_FROM_BRANCH} HEAD`..HEAD | grep php$)
+  filesToCheck=$(git diff --name-only --diff-filter=d \
+    `git merge-base ${INPUT_PHPMD_SOURCE_DIFF_FROM_BRANCH} HEAD`..HEAD | grep php$)
   if [ ${#filesToCheck} -eq 0 ]; then
     echo "There are no changed files to check."
     exit 0
@@ -24,12 +25,6 @@ fi
     ${INPUT_PHPMD_OPTIONAL_ARGS}
 
 EXIT_CODE=$?
-
-# Three issues going on here:
-#  i) the warnings issued may correspond to lines that have not been modified
-#  ii) the exit code may change if warnings for non-changed lines are disregarded
-#  iii) commits made directly to the branch specified in INPUT_PHPMD_SOURCE_DIFF_FROM_BRANCH are not captured in the
-#       diff and won't be checked
 
 cat /tmp/phpmd_result.gh
 
