@@ -28,4 +28,8 @@ EXIT_CODE=$?
 
 cat /tmp/phpmd_result.gh
 
+if [ ${INPUT_ALWAYS_PASS} -eq "true" ]; then
+  exit 0;
+fi
+
 exit $EXIT_CODE

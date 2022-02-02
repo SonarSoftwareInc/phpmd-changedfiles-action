@@ -24,6 +24,10 @@ inputs:
     description: 'Optional arguments for phpmd.'
     default: ''
     required: false
+  always_pass:
+    description: 'Force the action to pass regardless of any phpmd rule violations.'
+    default: 'false'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
