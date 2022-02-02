@@ -28,7 +28,7 @@ EXIT_CODE=$?
 
 cat /tmp/phpmd_result.gh
 
-if [ ${INPUT_ALWAYS_PASS} -eq "true" ]; then
+if [ ${INPUT_ALWAYS_PASS} == "true" ]; then
   exit 0;
 fi
 
